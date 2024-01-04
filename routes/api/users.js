@@ -6,8 +6,11 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 /* eslint-disable @typescript-eslint/naming-convention */
+
+const validateRegisterInput = require('../../validation/register');
 // Load User Module
 const User = require('../../models/User');
+const { request } = require('node:http');
 
 router.get('/test', (req, res) => res.json({ msg: 'Users works' })); // the servers.js contains the routes/api/ already
 
@@ -16,6 +19,11 @@ router.get('/test', (req, res) => res.json({ msg: 'Users works' })); // the serv
 // @access Public
 
 router.post('/register', (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors); // not valid, there is error
+  }
   User.findOne({ email: req.body.email }) // findOne mongoose method
 
     .then((user) => {
