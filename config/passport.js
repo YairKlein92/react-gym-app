@@ -5,8 +5,8 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
 const keys = require('../config/keys');
-const passport = require('passport');
-const { errorMonitor } = require('stream');
+// const passport = require('passport');
+// const { errorMonitor } = require('node:stream'); // instead of stream
 
 const opts = {};
 // Specify how the JWT is extracted from the incoming request.
